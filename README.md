@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/X-Plat/lsp_manager.png)](https://travis-ci.org/X-Plat/lsp_manager)
+
 # lsp_manager
 
 This repository contains the source code for a lsp manager
