@@ -56,6 +56,13 @@ class Process(ProcessEvent):
                          self.logger.info('Ready to create symlink for #%s instance of %s.'
                          %(ins['instance_index'], ins['application_name']))
                          os.symlink(container_path, bns_path)
+                     elif not os.access(bns_path, os.W_OK):
+                         self.logger.warn('Remove staled bns path %s!'%(bns_path))
+                         os.remove(bns_path)
+
+                         self.logger.info('Recreating symlink for #%s instance of %s.'
+                         %(ins['instance_index'], ins['application_name']))
+                         os.symlink(container_path, bns_path)
                      else:
                          self.logger.warn('Ignored LINK-OP since the link for #%s of %s exists!')
  
