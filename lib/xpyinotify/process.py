@@ -40,7 +40,7 @@ class Process(ProcessEvent):
         bnsset = bns_node.split('-')
         bns_name = '%s-%s-%s'%(bnsset[0],bnsset[1],bnsset[2])
         bns_path = "%s/%s.%s.%s" %(self.bns_base, bns_offset,bns_name,self.clustersuf)
-        return "%s" % bns_path
+        return bns_path
 
     def update_bns_link(self, agent_data):
         """
