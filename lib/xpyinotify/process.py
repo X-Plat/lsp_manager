@@ -11,6 +11,8 @@ class Process(ProcessEvent):
        self.bns_base = config['bns_base']
        self.container_relative_path = config['container_relative_path']
        self.container_base_path = config['container_base_path']
+       self.clusterid = config['cluster_id']
+       self.clustersuf = config['cluster_suffix']
 
     def process_default(self, event):
         """
@@ -28,6 +30,17 @@ class Process(ProcessEvent):
         super(Process, self).process_default(event)
         fl = yaml.load(file(self.ins_file,'rb').read())
         self.update_bns_link(fl)
+
+    def make_bns_path(self, ins):
+        """
+        process make bns_path 
+        """
+        bns_offset = 10000*int(ins['application_db_id'])+int(ins['instance_index'])*10+int(self.clusterid)
+        bns_node = ins['tags']['bns_node']
+        bnsset = bns_node.split('-')
+        bns_name = '%s-%s-%s'%(bnsset[0],bnsset[1],bnsset[2])
+        bns_path = "%s/%s.%s.%s" %(self.bns_base, bns_offset,bns_name,self.clustersuf)
+        return bns_path
 
     def update_bns_link(self, agent_data):
         """
@@ -49,8 +62,7 @@ class Process(ProcessEvent):
                      self.logger.error('Container %s not exist, the data file is staled.' %(\
                      ins['warden_handle']))
                  else:
-                     bns_path = "%s/%s.%s" %(self.bns_base, ins['instance_index'],
-                         ins['tags']['bns_node'])
+                     bns_path = self.make_bns_path(ins)
                      required_links.add(bns_path)
                      if not os.path.islink(bns_path):
                          self.logger.info('Ready to create symlink for #%s instance of %s.'
