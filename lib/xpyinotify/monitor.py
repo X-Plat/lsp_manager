@@ -4,6 +4,7 @@ import os,sys
 import threading
 
 from process import Process
+from container_register import ContainerRegister
 from pyinotify import WatchManager, Notifier, EventsCodes
 
 class Monitor(threading.Thread):
@@ -15,7 +16,10 @@ class Monitor(threading.Thread):
                     EventsCodes.IN_CREATE | EventsCodes.IN_MOVED_TO
 
         self.wm = WatchManager()
-        self.notifier = Notifier(self.wm, Process(logger, config))
+        if config['task'] == 'register':
+            self.notifier = Notifier(self.wm, ContainerRegister(logger, config))
+        else
+            self.notifier = Notifier(self.wm, Process(logger, config))
         self.mon_dir = config['monitor_dir']
         self.logger.info("Monitor starting...")
 

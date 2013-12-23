@@ -11,6 +11,7 @@ sys.path.append(LIB_PATH)
 sys.path.append(CONF_PATH)
 
 from conf_lsp import Config
+from conf_register import  RegisterConfig
 from xpyinotify.monitor import Monitor
 
 import logging
@@ -23,6 +24,8 @@ if __name__ == '__main__':
     logging.config.fileConfig(log_conf)
     logger = logging.getLogger("mondir")
     
-    monitor = Monitor(logger, Config)
-    monitor.run()
+    linker = Monitor(logger, Config)
+    linker.run()
+    register = Monitor(logger, RegisterConfig)
+    register.run()
     
