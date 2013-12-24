@@ -6,5 +6,5 @@ LinkConfig = {
    'container_base_path': '/tmp/warden/containers',
    'container_relative_path': '/tmp/rootfs/home/vcap/app',
    'cluster_id': '2',
-   'cluster_suffix': 'paas-hz00.all',
+   'cluster_suffix': 'cluster',
 }

@@ -1,0 +1,5 @@
+#!/home/work/opbin/python-2.7.2/bin/python2.7
+
+import pydoc
+if __name__ == '__main__':
+    pydoc.cli()

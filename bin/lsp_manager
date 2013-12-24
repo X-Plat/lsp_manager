@@ -25,7 +25,8 @@ if __name__ == '__main__':
     logger = logging.getLogger("mondir")
     
     linker = Monitor(logger, Config)
-    linker.run()
+    linker.start()
+
     register = Monitor(logger, RegisterConfig)
-    register.run()
+    register.start()
     

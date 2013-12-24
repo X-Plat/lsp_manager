@@ -9,6 +9,7 @@ from pyinotify import WatchManager, Notifier, EventsCodes
 
 class Monitor(threading.Thread):
     def __init__(self, logger, config):
+        threading.Thread.__init__(self)
         self.logger = logger
         self.config = config
         self.mask = EventsCodes.IN_MODIFY | EventsCodes.IN_DELETE | \
@@ -18,7 +19,7 @@ class Monitor(threading.Thread):
         self.wm = WatchManager()
         if config['task'] == 'register':
             self.notifier = Notifier(self.wm, ContainerRegister(logger, config))
-        else
+        else:
             self.notifier = Notifier(self.wm, Process(logger, config))
         self.mon_dir = config['monitor_dir']
         self.logger.info("Monitor starting...")
@@ -50,6 +51,6 @@ class Monitor(threading.Thread):
                 # stop monitoring
                 self.notifier.stop()
                 break
-            except Exception, err:
-                # otherwise keep on watching
-                self.logger.error("Error occured with %s" %err)
+            #except Exception, err:
+            #    # otherwise keep on watching
+            #    self.logger.error("Error occured with %s" %err)
